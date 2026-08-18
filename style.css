@@ -1,0 +1,198 @@
+/* numble — public site
+   Dark palette, matching the app. */
+
+:root {
+  --background: #0A0F26;
+  --surface: #141B3A;
+  --card: #1E2850;
+  --card-high: #2A3565;
+
+  --cyan: #22E0FF;
+  --gold: #FFB627;
+  --green: #2BF598;
+  --violet: #B08CFF;
+
+  --text-primary: #F4F8FF;
+  --text-secondary: #A8B6D4;
+  --text-dim: #6B7A9E;
+
+  --measure: 680px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+header {
+  border-bottom: 1px solid var(--card);
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand b {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--cyan);
+}
+
+.brand span {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+nav {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────── */
+
+h1 {
+  color: var(--text-primary);
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px;
+}
+
+h2 {
+  color: var(--cyan);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 40px 0 10px;
+}
+
+h3 {
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 700;
+  margin: 28px 0 6px;
+}
+
+p { margin: 0 0 14px; }
+
+ul { margin: 0 0 14px; padding-left: 22px; }
+li { margin-bottom: 6px; }
+
+a { color: var(--cyan); }
+
+.updated {
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 15px;
+  margin-bottom: 28px;
+}
+
+.lede {
+  color: var(--text-primary);
+  font-size: 19px;
+}
+
+/* ── Components ─────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--card);
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin: 24px 0;
+}
+
+.contact {
+  display: inline-block;
+  background: var(--card);
+  border: 1px solid var(--card-high);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.note {
+  border-left: 3px solid var(--gold);
+  padding: 2px 0 2px 16px;
+  color: var(--text-secondary);
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 16px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--card);
+  vertical-align: top;
+}
+
+th {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* Wide content must scroll inside itself, never the page. */
+.scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+footer {
+  border-top: 1px solid var(--card);
+  margin-top: 60px;
+  padding-top: 20px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+footer a { color: var(--text-secondary); }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  h1 { font-size: 26px; }
+  .wrap { padding: 24px 16px 60px; }
+}
