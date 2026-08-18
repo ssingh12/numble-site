@@ -7,6 +7,7 @@ The public site for **numble** — a number maze puzzle game for Android and iOS
 | Home | `/` |
 | Privacy policy | `/privacy.html` |
 | Support | `/support.html` |
+| Delete account | `/delete-account.html` |
 
 Static HTML and one stylesheet. No build step.
 
