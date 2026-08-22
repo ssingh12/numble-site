@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Play numble</title>
+<meta name="description" content="Play numble in your browser. Trace a path through the grid and land exactly on the target.">
+<meta name="theme-color" content="#0A0F26">
+<style>
+  /* Palette mirrors style.css, which mirrors the app. This page does not use
+     style.css: that stylesheet is built for a document with a reading measure,
+     and this one is a full-viewport frame. */
+  :root {
+    --background: #0A0F26;
+    --surface: #141B3A;
+    --card: #1E2850;
+    --card-high: #2A3565;
+    --cyan: #22E0FF;
+    --gold: #FFB627;
+    --text-primary: #F4F8FF;
+    --text-secondary: #A8B6D4;
+    --text-dim: #6B7A9E;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--background);
+    color: var(--text-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  a { color: var(--cyan); }
+
+  /* ── Phone ──────────────────────────────────────────────────────────────
+     One element, two lives. On a phone it is the viewport: no bezel, no
+     rounding, nothing between the player and the game. On anything wider it
+     becomes a handset sitting on a desk, because numble is a mobile game and
+     a puzzle grid stretched across a 27-inch monitor is not the thing we are
+     asking anyone to judge. */
+  .phone {
+    position: relative;
+    width: 100%;
+    height: 100dvh;      /* dvh, not vh: mobile browser chrome moves */
+    background: #07071A;
+    overflow: hidden;
+  }
+
+  .phone iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Everything outside the phone is desktop-only furniture. */
+  .desk { display: none; }
+
+  @media (min-width: 900px) {
+    body {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 56px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .desk {
+      display: block;
+      max-width: 460px;
+    }
+
+    .phone {
+      /* 390x844 is an iPhone 15 in CSS pixels — a real handset, not a guess,
+         so what a desktop visitor sees is what a phone visitor gets. */
+      width: 390px;
+      height: 844px;
+      max-height: calc(100dvh - 80px);
+      border-radius: 44px;
+      border: 10px solid #10162E;
+      box-shadow:
+        0 0 0 2px var(--card-high),
+        0 30px 70px rgba(0, 0, 0, 0.55),
+        0 0 90px rgba(34, 224, 255, 0.06);
+      flex: none;
+    }
+
+    /* The speaker slot. Small, and behind nothing — purely so the frame reads
+       as a handset at a glance rather than a bordered box. */
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 108px;
+      height: 22px;
+      border-radius: 12px;
+      background: #10162E;
+      z-index: 2;
+      pointer-events: none;
+    }
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    margin-bottom: 28px;
+  }
+  .brand b {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--cyan);
+  }
+  .brand span { font-size: 13px; color: var(--text-dim); }
+
+  h1 {
+    color: var(--text-primary);
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+  }
+
+  .lede { color: var(--text-primary); font-size: 18px; margin: 0 0 20px; }
+
+  .steps { margin: 0 0 24px; padding-left: 20px; }
+  .steps li { margin-bottom: 8px; }
+
+  .note {
+    border-left: 3px solid var(--gold);
+    padding: 2px 0 2px 16px;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+
+  .back { font-size: 15px; }
+
+  /* ── The mobile banner ─────────────────────────────────────────────────
+     On a phone the desk copy is gone, so the one thing worth saying — that
+     this is a preview of an app, not a website — is said briefly and then
+     dismissed, rather than permanently eating screen the game needs. */
+  .hint {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 3;
+    background: var(--surface);
+    border: 1px solid var(--card-high);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+  .hint p { margin: 0; flex: 1; }
+  .hint button {
+    flex: none;
+    background: var(--card);
+    border: 1px solid var(--card-high);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .hint button:hover { border-color: var(--cyan); color: var(--cyan); }
+  .hint[hidden] { display: none; }
+
+  @media (min-width: 900px) { .hint { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="desk">
+  <a class="brand" href="/"><b>numble</b><span>Nimble with Numbers</span></a>
+
+  <h1>This is a phone game.</h1>
+  <p class="lede">So it is running in a phone. What is in the frame is the real
+  app — the same puzzle generator, the same boards, nothing simplified for the
+  web.</p>
+
+  <ol class="steps">
+    <li><strong>Drag</strong> from the green doorway to trace a path. A mouse
+    works as well as a finger — press, drag, release.</li>
+    <li>Every wall between two squares carries an operation. Crossing it applies
+    that operation to the number you land on.</li>
+    <li>A gate is <strong>shut</strong> unless crossing it leaves a whole number
+    of at least zero. So the board changes shape depending on the number you are
+    carrying — a gate closed at 7 opens at 14.</li>
+    <li>Reach the gold exit carrying exactly the target.</li>
+  </ol>
+
+  <p class="note">A browser has no vibration motor and no ad support, so the
+  haptics and the ads are simply absent here. Scores stay in this browser and
+  there are no accounts — nothing to sign up for, nothing kept.</p>
+
+  <p class="back"><a href="/">← Back to numble</a></p>
+</div>
+
+<div class="phone">
+  <iframe
+    src="app/"
+    title="numble"
+    allow="autoplay"
+    referrerpolicy="no-referrer"></iframe>
+</div>
+
+<div class="hint" id="hint">
+  <p>This is a preview of the numble app, running in your browser. Drag from the
+  green doorway to start.</p>
+  <button type="button" id="hintDismiss">Got it</button>
+</div>
+
+<script>
+  // Dismissible, and it stays dismissed. Wrapped because storage throws
+  // outright in some privacy modes rather than merely returning null, and a
+  // banner is not worth a broken page.
+  (function () {
+    var hint = document.getElementById('hint');
+    var button = document.getElementById('hintDismiss');
+    var KEY = 'numble_play_hint_seen';
+
+    try {
+      if (localStorage.getItem(KEY)) hint.hidden = true;
+    } catch (e) { /* private mode — show it, harmlessly, every time */ }
+
+    button.addEventListener('click', function () {
+      hint.hidden = true;
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+    });
+  })();
+</script>
+
+</body>
+</html>

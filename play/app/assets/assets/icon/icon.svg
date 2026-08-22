@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Outer wide glow -->
+    <filter id="glow-outer" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="28" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Tight inner glow for the arch highlight -->
+    <filter id="glow-arch" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background: deep space dark, rounded square -->
+  <rect width="1024" height="1024" rx="196" fill="#07071A"/>
+
+  <!-- Subtle inner vignette ring to add depth -->
+  <rect width="1024" height="1024" rx="196"
+        fill="none"
+        stroke="#0D0D2E"
+        stroke-width="40"
+        opacity="0.7"/>
+
+  <!-- The N letterform: two pillars + arch
+       Path: rise up left pillar, sweep arch over top, descend right pillar
+       stroke-linecap=round gives the tapered foot the user described -->
+  <path d="M 308 800 L 308 468 C 308 210, 716 210, 716 468 L 716 800"
+        fill="none"
+        stroke="#00F5FF"
+        stroke-width="88"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#glow-outer)"/>
+
+  <!-- Bright highlight on just the arch crown to pull the eye upward -->
+  <path d="M 380 310 C 420 232, 604 232, 644 310"
+        fill="none"
+        stroke="#AAFAFF"
+        stroke-width="24"
+        stroke-linecap="round"
+        opacity="0.55"
+        filter="url(#glow-arch)"/>
+</svg>

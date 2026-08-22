@@ -35,6 +35,8 @@ body {
   padding: 32px 20px 80px;
 }
 
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
 header {
   border-bottom: 1px solid var(--card);
   margin-bottom: 40px;
@@ -81,6 +83,8 @@ nav a[aria-current="page"] {
   border-bottom-color: var(--cyan);
 }
 
+/* ── Type ───────────────────────────────────────────────────────────────── */
+
 h1 {
   color: var(--text-primary);
   font-size: 32px;
@@ -122,6 +126,8 @@ a { color: var(--cyan); }
   font-size: 19px;
 }
 
+/* ── Components ─────────────────────────────────────────────────────────── */
+
 .card {
   background: var(--surface);
   border: 1px solid var(--card);
@@ -129,6 +135,19 @@ a { color: var(--cyan); }
   padding: 22px 24px;
   margin: 24px 0;
 }
+
+.cta {
+  display: inline-block;
+  background: var(--cyan);
+  color: #06121A;
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 13px 28px;
+}
+
+.cta:hover { background: #6BEBFF; }
 
 .contact {
   display: inline-block;
@@ -166,6 +185,7 @@ th {
   font-weight: 700;
 }
 
+/* Wide content must scroll inside itself, never the page. */
 .scroll-x {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;

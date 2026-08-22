@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="22" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8"  result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-arch" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Transparent background — Android adaptive icon supplies its own bg -->
+
+  <!-- N letterform scaled smaller and centred to sit within the safe zone
+       (safe zone = central 66% of 1024 = ~676px; symbol fits ~660px wide/tall) -->
+  <path d="M 340 830 L 340 508 C 340 258, 684 258, 684 508 L 684 830"
+        fill="none"
+        stroke="#00F5FF"
+        stroke-width="80"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#glow)"/>
+
+  <!-- Arch crown highlight -->
+  <path d="M 408 358 C 445 284, 579 284, 616 358"
+        fill="none"
+        stroke="#AAFAFF"
+        stroke-width="20"
+        stroke-linecap="round"
+        opacity="0.55"
+        filter="url(#glow-arch)"/>
+</svg>
