@@ -201,6 +201,16 @@ footer {
 
 footer a { color: var(--text-secondary); }
 
+/* Companies Act trading disclosure. Required on a UK limited company's
+   website — name, registered number, place of registration and registered
+   office — so it appears on every page, not only the policy. */
+.disclosure {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
 @media (max-width: 480px) {
   body { font-size: 16px; }
   h1 { font-size: 26px; }
