@@ -20,11 +20,17 @@
     </filter>
   </defs>
 
-  <!-- Background: deep space dark, rounded square -->
-  <rect width="1024" height="1024" rx="196" fill="#07071A"/>
+  <!-- Background: deep space dark, FULL BLEED.
+       rx must stay 0. iOS masks the icon to a squircle and Play applies its
+       own shape, so a radius here is a second rounding on top of theirs: the
+       corners outside our curve were flattened to white, and white shows in
+       whatever gap the two radii leave. Apple and Google both ask for a
+       full-bleed square for exactly this reason. -->
+  <rect width="1024" height="1024" fill="#07071A"/>
 
-  <!-- Subtle inner vignette ring to add depth -->
-  <rect width="1024" height="1024" rx="196"
+  <!-- Subtle inner vignette ring to add depth. Keeps its radius: this one is
+       artwork sitting inside the icon, not the icon's edge. -->
+  <rect x="40" y="40" width="944" height="944" rx="176"
         fill="none"
         stroke="#0D0D2E"
         stroke-width="40"

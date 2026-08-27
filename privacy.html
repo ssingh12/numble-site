@@ -32,6 +32,13 @@ policy explains what data we collect, why, and your rights over it. By using
 numble you agree to this policy.</p>
 
 <h2>1. Data we collect</h2>
+<p>Guest play: numble signs you in anonymously the first time you open it, so
+that scores have somewhere to belong before you decide whether to register. This
+creates an identifier held by Firebase Authentication (Google LLC). It is not
+linked to your name or email address, we cannot tell who you are from it, and
+anonymous records that go 30 days without being used are deleted automatically.
+If you later register, that same record becomes your account rather than a
+second one being created.</p>
 <p>Account data (if you register): email address and display name, stored in
 Firebase Authentication (Google LLC).</p>
 <p>Your display name is published on the leaderboards alongside your scores,
@@ -43,19 +50,29 @@ Firestore (Google LLC) and locally on your device.</p>
 <p>Advertising data: if you consent on iOS, or by default on Android, Google
 AdMob may collect device identifiers and usage data to serve contextual
 advertisements. We have configured AdMob to serve G-rated content only.</p>
+<p>Crash and performance data: released versions of numble use Firebase
+Crashlytics (Google LLC), which reports crashes and errors together with your
+device model, operating system version and what the app was doing at the time.
+It carries no account identifier, so it is not linked to you, and it is switched
+off entirely in development and test builds.</p>
 
 <h2>2. How we use your data</h2>
 <ul>
   <li>To provide game features: saving progress, displaying leaderboards.</li>
-  <li>To improve the game: understanding which levels are played most.</li>
+  <li>To keep the game working: diagnosing crashes and errors from the reports
+    described above.</li>
   <li>To show ads: contextual ads fund free access to numble.</li>
 </ul>
+<p>Beyond the advertising data described above, numble contains no analytics. We
+do not record which levels you play, how long you stay, or what you tap.</p>
 <p>We do not sell your personal data to third parties.</p>
 
 <h2>3. Data retention</h2>
 <p>Your data is retained until you delete your account. Deleting your account
 removes your Firebase Auth record, all Firestore scores, and all locally cached
 progress on this device. Anonymised aggregate statistics may be retained.</p>
+<p>Anonymous guest records are deleted automatically after 30 days without being
+used, whether or not you ask us.</p>
 
 <h2>4. Your rights</h2>
 <p>You have the right to:</p>
@@ -84,6 +101,8 @@ compliance with COPPA.</p>
 policies:</p>
 <ul>
   <li>Firebase Authentication &amp; Firestore — Google LLC</li>
+  <li>Firebase Crashlytics — Google LLC (released versions only)</li>
+  <li>Firebase App Check — Google LLC</li>
   <li>Google AdMob — Google LLC</li>
 </ul>
 <p>Google's privacy policy:
@@ -94,6 +113,10 @@ policies:</p>
 each user to writing and deleting only their own records. Passwords are hashed
 by Firebase Authentication and are never stored by us. Local progress is stored
 in platform-protected app storage.</p>
+<p>numble uses Firebase App Check, which asks Google Play Integrity on Android or
+DeviceCheck on iOS to confirm that a request came from a genuine copy of the app.
+It examines the app and the device, not you, and it exists to stop the
+leaderboard being written to by anything other than numble itself.</p>
 
 <h2>8. Changes to this policy</h2>
 <p>We may update this policy from time to time. Material changes will be
