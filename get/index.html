@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Get numble</title>
+<meta name="description" content="Install numble on Android or iPhone, or play it straight away in your browser.">
+<meta name="theme-color" content="#0A0F26">
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --background: #0A0F26;
+    --surface: #141B3A;
+    --card-high: #2A3565;
+    --cyan: #22E0FF;
+    --gold: #FFB627;
+    --text-primary: #F4F8FF;
+    --text-secondary: #A8B6D4;
+    --text-dim: #6B7A9E;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--background); color: var(--text-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px; line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+  main {
+    min-height: 100vh; min-height: 100dvh;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+    padding: 32px 24px; gap: 8px;
+  }
+  h1 {
+    font-size: 30px; letter-spacing: .22em; text-transform: lowercase;
+    color: var(--text-primary); margin: 0 0 4px; font-weight: 700;
+  }
+  .tagline { color: var(--gold); font-size: 14px; letter-spacing: .08em; margin: 0 0 28px; }
+  .status { color: var(--text-dim); font-size: 15px; margin: 0 0 22px; min-height: 1.6em; }
+  .links { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
+  a.btn {
+    display: block; padding: 14px 20px; border-radius: 999px;
+    text-decoration: none; font-size: 15px; font-weight: 600;
+    letter-spacing: .04em; border: 1px solid var(--card-high);
+    color: var(--text-primary); background: var(--surface);
+  }
+  a.btn.primary { border-color: var(--cyan); color: var(--cyan); }
+  a.btn:hover { border-color: var(--cyan); }
+  a.btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  footer { margin-top: 30px; font-size: 13px; color: var(--text-dim); }
+  footer a { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<main>
+  <h1>numble</h1>
+  <p class="tagline">Nimble with Numbers</p>
+
+    <p class="status" id="status">Choose how you would like to play.</p>
+
+  <div class="links">
+    <a class="btn primary" id="play" href="/play/?from=get">Play in your browser</a>
+    <a class="btn" id="android" href="https://play.google.com/store/apps/details?id=app.playnumble">Get it on Google Play</a>
+    <a class="btn" id="ios" href="/play/?from=get">iPhone and iPad</a>
+  </div>
+
+  <footer><a href="/">playnumble.app</a></footer>
+</main>
+
+<script>
+(function () {
+  // The App Store listing is still in review. Until it is live, an iPhone is
+  // sent to the browser build rather than to a page that would 404 — the worst
+  // possible answer for someone who just asked where to get the app. Flip
+  // IOS_URL to the apps.apple.com link on the day Apple approves; the App
+  // Store id is already known: 6805029836.
+  var IOS_LIVE = false;
+  var IOS_URL = 'https://apps.apple.com/app/id6805029836';
+  var ANDROID_URL = 'https://play.google.com/store/apps/details?id=app.playnumble';
+  var WEB_URL = '/play/?from=get';
+
+  var ua = navigator.userAgent || '';
+  var isAndroid = /Android/i.test(ua);
+  // iPadOS 13 and later report themselves as "Macintosh" in Safari, so a UA
+  // test alone sends every iPad down the desktop path. Touch points are what
+  // actually separates them from a Mac.
+  var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+              (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+
+  var target = WEB_URL, label = 'Opening numble in your browser';
+  if (isAndroid) {
+    target = ANDROID_URL; label = 'Taking you to Google Play';
+  } else if (isIOS && IOS_LIVE) {
+    target = IOS_URL; label = 'Taking you to the App Store';
+  }
+
+  if (isIOS && IOS_LIVE) document.getElementById('ios').href = IOS_URL;
+  document.getElementById('status').textContent = label + '…';
+
+  // A short pause, not zero. It lets the analytics beacon report this visit
+  // before the page is replaced, and it leaves the manual links on screen long
+  // enough to be usable if the redirect is blocked. replace() rather than
+  // assign() so the back button returns where the visitor came from instead of
+  // bouncing them through here again.
+  setTimeout(function () { window.location.replace(target); }, 500);
+})();
+</script>
+
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "984436395a024c57943f9ccbb21e3aca"}'></script>
+</body>
+</html>
