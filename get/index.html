@@ -74,7 +74,7 @@
   <div class="links">
     <a class="btn primary" id="play" href="/play/?from=get">Play in your browser</a>
     <a class="btn" id="android" href="https://play.google.com/store/apps/details?id=app.playnumble">Get it on Google Play</a>
-    <a class="btn" id="ios" href="/play/?from=get">iPhone and iPad</a>
+    <a class="btn" id="ios" href="https://apps.apple.com/app/id6805029836">Download on the App Store</a>
   </div>
 
   <footer><a href="/">playnumble.app</a></footer>
@@ -82,12 +82,11 @@
 
 <script>
 (function () {
-  // The App Store listing is still in review. Until it is live, an iPhone is
-  // sent to the browser build rather than to a page that would 404 — the worst
-  // possible answer for someone who just asked where to get the app. Flip
-  // IOS_URL to the apps.apple.com link on the day Apple approves; the App
-  // Store id is already known: 6805029836.
-  var IOS_LIVE = false;
+  // Live on both stores since 4 September 2026. This used to carry an
+  // IOS_LIVE flag that sent iPhones to the browser build instead, because the
+  // App Store listing was still in review and a dead store page is the worst
+  // possible answer for somebody who just asked where to get the app. Apple
+  // approved, so the special case is gone rather than left switched on.
   var IOS_URL = 'https://apps.apple.com/app/id6805029836';
   var ANDROID_URL = 'https://play.google.com/store/apps/details?id=app.playnumble';
   var WEB_URL = '/play/?from=get';
@@ -103,11 +102,9 @@
   var target = WEB_URL, label = 'Opening numble in your browser';
   if (isAndroid) {
     target = ANDROID_URL; label = 'Taking you to Google Play';
-  } else if (isIOS && IOS_LIVE) {
+  } else if (isIOS) {
     target = IOS_URL; label = 'Taking you to the App Store';
   }
-
-  if (isIOS && IOS_LIVE) document.getElementById('ios').href = IOS_URL;
   document.getElementById('status').textContent = label + '…';
 
   // A short pause, not zero. It lets the analytics beacon report this visit
