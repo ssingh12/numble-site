@@ -216,3 +216,20 @@ footer a { color: var(--text-secondary); }
   h1 { font-size: 26px; }
   .wrap { padding: 24px 16px 60px; }
 }
+
+/* Store badges. Apple's and Google's artwork, unmodified — both vendors'
+   guidelines forbid recolouring, cropping or adding effects, so these rules do
+   nothing but set a height and keep the pair on one baseline.
+
+   The two are sized differently on purpose: Google's badge carries roughly a
+   tenth of its own height as built-in padding, so matching the raw heights
+   would make the App Store button look the larger of the two. */
+.stores {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.badge-apple  { height: 48px; width: auto; display: block; }
+.badge-google { height: 56px; width: auto; display: block; }
