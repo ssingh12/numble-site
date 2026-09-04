@@ -1,0 +1,15 @@
+# playnumble.app
+
+User-agent: *
+Allow: /
+
+# The compiled Flutter app: thousands of generated assets with no readable
+# content. Crawling it spends budget on files no person would ever open.
+Disallow: /play/app/
+
+# /get is deliberately NOT blocked here. It is a device-sniffing redirect and
+# carries a noindex meta tag — and a page blocked in robots.txt is never
+# fetched, so its noindex is never read, which is exactly how a URL ends up
+# indexed with no content. Let it be crawled so the noindex can do its job.
+
+Sitemap: https://playnumble.app/sitemap.xml
